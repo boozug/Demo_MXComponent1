@@ -21,7 +21,7 @@ public class DBUserAdapter
 
     private static final String DATABASE_CREATE =
             "create table users (_id integer primary key autoincrement, "
-                    + "username text not null, "
+                    + "username text not null unique, "
                     + "password text not null);";
 
     private Context context = null;
@@ -32,7 +32,7 @@ public class DBUserAdapter
     {
         this.context = ctx;
         DBHelper = new DatabaseHelper(context);
-        DBHelper.onCreate(db);
+//        DBHelper.onCreate(db);
     }
 
     static class DatabaseHelper extends SQLiteOpenHelper

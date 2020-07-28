@@ -21,8 +21,6 @@ import java.nio.channels.AsynchronousFileChannel;
 
  public class Login_form extends AppCompatActivity {
      // declare
-     String DATABASE_TABLE = "Users";
-     public static final String DATABASE_NAME = "Accounts";
      @Override
      protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -31,30 +29,28 @@ import java.nio.channels.AsynchronousFileChannel;
          final EditText txtUserName = (EditText) findViewById(R.id.TxtUsername);
          final EditText txtPassword = (EditText) findViewById(R.id.TxtPassword);
          btnLogin.setOnClickListener(new View.OnClickListener() {
-                                         //            public Database.DatabaseHelper database = new Database.DatabaseHelper(this,DATABASE_NAME,null,1);
-                                         String username = txtUserName.getText().toString();
-                                         String password = txtPassword.getText().toString();
 
-                                         public void onClick(View view) {
-                                             try {
-                                                 if (username.length() > 0 && password.length() > 0) {
-                                                     DBUserAdapter dbUser = new DBUserAdapter(Login_form.this);
-                                                     dbUser.open();
-                                                     if(dbUser.Login(username,password))
-                                                     {
-                                                         Toast.makeText(Login_form.this,"Successfully Logged In", Toast.LENGTH_LONG).show();
-                                                     }
-                                                     else {
-                                                         Toast.makeText(Login_form.this,"Invalid Username/Password", Toast.LENGTH_LONG).show();
-                                                     }
-                                                 }
-                                             } catch (Exception e) {
-                                                 Toast.makeText(Login_form.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                                             }
-                                         }
-                                     }
-
-         );
+             public void onClick(View view) {
+                 String username = txtUserName.getText().toString();
+                 String password = txtPassword.getText().toString();
+                 try {
+                     if (username.length() > 0 && password.length() > 0) {
+                         DBUserAdapter dbUser = new DBUserAdapter(Login_form.this);
+                         dbUser.open();
+                         if(dbUser.Login(username,password))
+                         {
+                             Toast.makeText(Login_form.this,"Logged In Successfully", Toast.LENGTH_LONG).show();
+                         }
+                         else {
+                             Toast.makeText(Login_form.this,"Invalid Username/Password", Toast.LENGTH_LONG).show();
+                         }
+                         dbUser.close();
+                     }
+                 } catch (Exception e) {
+                     Toast.makeText(Login_form.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                 }
+             }
+         });
          TextView register = (TextView) findViewById(R.id.textView_register);
          register.setMovementMethod(LinkMovementMethod.getInstance());
          register.setOnClickListener(new View.OnClickListener() {
