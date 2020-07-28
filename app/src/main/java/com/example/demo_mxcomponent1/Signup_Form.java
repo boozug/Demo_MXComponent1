@@ -3,6 +3,7 @@
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteException;
 import android.widget.Toast;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -47,9 +48,14 @@ import static android.widget.Toast.*;
                          if (password.equals(rptpassword) ) {
                              DBUserAdapter dbUser = new DBUserAdapter(Signup_Form.this);
                              dbUser.open();
-                             dbUser.AddUser(username,password);
-                             Toast.makeText(Signup_Form.this,"Finished. Pls check your account in the login form", Toast.LENGTH_LONG).show();
-                             dbUser.close();
+                             try {
+                                 dbUser.AddUser(username,password);
+                                 Toast.makeText(Signup_Form.this,"Finished. Pls check your account in the login form", Toast.LENGTH_LONG).show();
+                                 dbUser.close();
+                             }
+                             catch (SQLiteException e){
+                                 Toast.makeText(Signup_Form.this,e.getMessage(), Toast.LENGTH_LONG).show();
+                             }
                          }
                          else {
                              Toast.makeText(Signup_Form.this,"Pls correct password", Toast.LENGTH_LONG).show();
@@ -59,9 +65,11 @@ import static android.widget.Toast.*;
                      {
                          Toast.makeText(Signup_Form.this,"Pls add an correct User", Toast.LENGTH_LONG).show();
                      }
+
                  }
-                 catch (SQLException e){
+                 catch(Exception e){
                      Toast.makeText(Signup_Form.this,e.getMessage(), Toast.LENGTH_LONG).show();
+
                  }
              }
          });
