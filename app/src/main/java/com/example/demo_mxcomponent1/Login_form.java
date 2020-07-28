@@ -40,6 +40,8 @@ import java.nio.channels.AsynchronousFileChannel;
                          if(dbUser.Login(username,password))
                          {
                              Toast.makeText(Login_form.this,"Logged In Successfully", Toast.LENGTH_LONG).show();
+                             Intent intent = new Intent(Login_form.this, Devices_list.class);
+                             startActivity(intent);
                          }
                          else {
                              Toast.makeText(Login_form.this,"Invalid Username/Password", Toast.LENGTH_LONG).show();
